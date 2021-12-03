@@ -9,7 +9,7 @@ sudo apt install -y python3-pip zsh htop git curl tldr
 sudo usermod -s /usr/bin/zsh $(whoami)
 
 # Install snap packages
-sudo snap install pycharm-community --classic
+sudo snap install phpstorm-community --classic
 sudo snap install slack --classic
 sudo snap install discord
 sudo snap connect discord:system-observe
@@ -29,6 +29,9 @@ sudo apt install ./google-chrome-stable_current_amd64.deb
 # Install Docker
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
+
+sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 
 # Info for the user
 echo ""
