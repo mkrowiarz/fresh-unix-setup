@@ -3,16 +3,16 @@
 # Install apt packages
 sudo apt update
 sudo apt upgrade
-sudo apt install -y python3-pip zsh htop git curl tldr
+sudo apt install -y python3-pip zsh htop git curl tldr ca-certificates curl gnupg lsb-release libfuse2 tilix
 
 # Set ZSH as default shell
 sudo usermod -s /usr/bin/zsh $(whoami)
 
 # Install snap packages
-sudo snap install phpstorm-community --classic
 sudo snap install slack --classic
 sudo snap install discord
 sudo snap connect discord:system-observe
+sudo snap install code --classic
 
 # Install Antigen (ZSH plugin manager)
 curl -L git.io/antigen > ~/.antigen.zsh
@@ -26,12 +26,17 @@ cp .p10k.zsh ~/.p10k.zsh
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo apt install ./google-chrome-stable_current_amd64.deb
 
-# Install Docker
-curl -fsSL https://get.docker.com -o get-docker.sh
-sudo sh get-docker.sh
+# Install docker
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-sudo curl -L "https://github.com/docker/compose/releases/download/2.1.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+# Install Jetbrains Toolbox
+curl -fsSL https://raw.githubusercontent.com/nagygergo/jetbrains-toolbox-install/master/jetbrains-toolbox.sh | bash
 
 # Info for the user
 echo ""
